@@ -1,0 +1,15 @@
+
+<div class="todo-list">
+  <div class="todo" *ngFor="let todo of (todos$ | async)" [ngClass]="{ done: todo.statusId === ETodoStatuses.DONE }">
+    <div class="status-icon" (click)="onChangeStatus(todo.id)"></div>
+    <div class="title">{{ todo.title }}</div>
+  </div>
+</div>
+
+<div class="add-todo">
+  <div class="caption">Добавить новую</div>
+  <form class="add-todo-form" [formGroup]="form" (ngSubmit)="onAddTodo()" novalidate>
+    <input class="add-todo-input" type="text" formControlName="title">
+    <button class="add-todo-button" [disabled]="!form.get('title').value" type="submit">Добавить</button>
+  </form>
+</div>
