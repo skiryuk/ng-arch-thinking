@@ -17,8 +17,7 @@ export class ApiTodoRepository implements ITodoRepository {
   }
 
   public getTodoList(): Observable<Todo[]> {
-    return this._http.get<Todo[]>('http://localhost:3000/api/todo/get')
-      .pipe(delay(1000));
+    return this._http.get<Todo[]>('http://localhost:3000/api/todo/get');
       /*.pipe(catchError((error: HttpErrorResponse) => {
         return throwError(
           error);
