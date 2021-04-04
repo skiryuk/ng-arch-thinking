@@ -1,0 +1,4 @@
+<div class="todo" [ngClass]="{ done: done }">
+  <div class="status-icon" (click)="onChangeStatus(todo.id)"></div>
+  <div class="title">{{ todo.title }}</div>
+</div>

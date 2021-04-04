@@ -2,29 +2,6 @@
 .todo-list {
   border-left: 1px solid #ccc;
   border-top: 1px solid #ccc;
-  .todo {
-    display: flex;
-    padding: 12px 16px;
-    border-bottom: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    .status-icon {
-      background: url('/assets/png/in-progress.png') no-repeat;
-      width: 16px;
-      height: 16px;
-    }
-    .title {
-      margin-left: 16px;
-    }
-
-    &.done {
-      .status-icon {
-        background: url('/assets/png/done.png') no-repeat;
-      }
-      .title {
-        text-decoration: line-through;
-      }
-    }
-  }
 }
 
 .add-todo {

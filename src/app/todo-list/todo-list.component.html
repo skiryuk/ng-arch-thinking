@@ -1,10 +1,9 @@
 
 <div class="todo-list">
-  <div class="todo" *ngFor="let todo of (todos$ | async)" [ngClass]="{ done: todo.statusId === ETodoStatuses.DONE }">
-    <div class="status-icon" (click)="onChangeStatus(todo.id)"></div>
-    <div class="title">{{ todo.title }}</div>
-  </div>
+  <app-todo-list-item [todo]="todo" *ngFor="let todo of todos$ | async"></app-todo-list-item>
 </div>
+
+<div *ngIf="isLoadingTodos$ | async">Loading...</div>
 
 <div class="add-todo">
   <div class="caption">Добавить новую</div>

@@ -1,35 +1,47 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TodoService } from '../core/services/todo.service';
-import { Todo } from '../core/models/todo.models';
-import { Observable } from 'rxjs';
+
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
 import { ETodoStatuses } from '../core/enums/todo.enums';
+import { TodoListFacade } from './todo-list.facade';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
+  providers: [TodoListFacade],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
 
-  public todos$: Observable<Todo[]>;
+  private _subs: Subscription = new Subscription();
 
-  public ETodoStatuses;
+  get todos$() {
+    return this._facade.todosListState.data$;
+  }
+
+  get isLoadingTodos$() {
+    return this._facade.todosListState.loading$;
+  }
 
   constructor(
     private _fb: FormBuilder,
-    private _todoService: TodoService
+    private _facade: TodoListFacade
   ) {
   }
 
   ngOnInit() {
-    this.ETodoStatuses = ETodoStatuses;
-    this.todos$ = this._todoService.todos$;
     this._buildForm();
-    this._todoService.getTodoList();
+    this._facade.getTodoList();
+
+    // не очень нравятся тут подписки
+    this._subs.add(this._facade.todosListState.success$
+      .pipe(filter(isSuccess => !!isSuccess))
+      .subscribe(() => this.form.get('title').setValue('')));
   }
 
   private _buildForm(): void {
@@ -39,14 +51,14 @@ export class TodoListComponent implements OnInit {
   }
 
   public onAddTodo(): void {
-    this._todoService.addTodo({
+    this._facade.addTodo({
       id: new Date().getTime(),
       title: this.form.get('title').value,
       statusId: ETodoStatuses.IN_PROGRESS
     });
   }
 
-  public onChangeStatus(id: number): void {
-    this._todoService.changeStatus(id);
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 }
