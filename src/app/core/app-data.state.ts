@@ -1,5 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
+// абстракция над данными,
+// получаемых с источника данных (с индикацией загрузки данных и признака успеха/неудачи)
 export class AppDataState<T> {
   private _data$: BehaviorSubject<T> = new BehaviorSubject(null);
   public data$: Observable<T> = this._data$.asObservable();

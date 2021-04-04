@@ -1,24 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Todo } from '../models/todo.models';
-import { TodoService } from './todo.service';
-import { ETodoStatuses } from '../enums/todo.enums';
-import { AppDataState } from './app-data.state';
+import { Inject, Injectable } from '@angular/core';
+import { Todo } from './todo.models';
+import { ETodoStatuses } from './todo.enums';
+import { AppDataState } from '../app-data.state';
+import { ITodoRepository } from './todo.repository';
 
+// Store по идеологии mobx: свойства (данные) и экшены
+// Слой для общения с репозиторием (связывает бизнес-логику и необходимые для нее апи вызовы)
 @Injectable({
   providedIn: 'root'
 })
-export class TodoFacade {
+export class TodoStore {
 
   // не очень что торчит наружу,
   // снаружи могут вызывать методы у стейты (beginLoading, clear и т.д) что не оч хорошо
   public todoListState: AppDataState<Todo[]> = new AppDataState();
 
-  constructor(private _todoService: TodoService) {
+  constructor(@Inject(ITodoRepository) private _todoRepository: ITodoRepository) {
   }
 
   public getTodoList(): void {
     this.todoListState.beginLoading();
-    this._todoService.getTodoList()
+    this._todoRepository.getTodoList()
       .subscribe(
         data => this.todoListState.endLoadingSuccess(data),
         error => this.todoListState.endLoadingError(error) // обработку ошибок лучше делать тут или лучше в сервисе?

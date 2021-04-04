@@ -4,12 +4,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 
-import { Todo } from '../models/todo.models';
+import { Todo } from './todo.models';
+import { ITodoRepository } from './todo.repository';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TodoService {
+// Репозиторий на методах апи
+@Injectable()
+export class ApiTodoRepository implements ITodoRepository {
 
   constructor(
     private _http: HttpClient
@@ -17,8 +17,7 @@ export class TodoService {
   }
 
   public getTodoList(): Observable<Todo[]> {
-    // return this._http.get<Todo[]>('http://localhost:3000/api/todo/get');
-    return this._http.get<Todo[]>('assets/data/todos.json')
+    return this._http.get<Todo[]>('http://localhost:3000/api/todo/get')
       .pipe(delay(1000));
       /*.pipe(catchError((error: HttpErrorResponse) => {
         return throwError(
