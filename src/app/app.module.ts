@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ITodoRepository } from './core/todo/todo.repository';
 import { MockTodoRepository } from './core/todo/mock-todo.repository';
+import { ApiTodoRepository } from './core/todo/api-todo.repository';
 
 @NgModule({
   declarations: [

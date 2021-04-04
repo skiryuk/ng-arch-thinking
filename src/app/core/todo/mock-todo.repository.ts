@@ -17,7 +17,7 @@ export class MockTodoRepository implements ITodoRepository {
   }
 
   public getTodoList(): Observable<Todo[]> {
-    return this._http.get<Todo[]>('./data/todos.json')
+    return this._http.get<Todo[]>('assets/data/todos.json')
       .pipe(delay(1000));
       /*.pipe(catchError((error: HttpErrorResponse) => {
         return throwError(
