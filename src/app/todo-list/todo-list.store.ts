@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { TodoStore } from '../core/todo/todo.store';
+import { TodoRepository } from '../core/todo/todo.repository';
 import { Todo } from '../core/todo/todo.models';
 
 @Injectable()
 export class TodoListStore {
-  constructor(private _todoStore: TodoStore) {}
+  constructor(private _todoRepository: TodoRepository) {}
 
   public revNumber = Math.random();
 
-  public get todosListState() { return this._todoStore.todoListState; }
+  public get todosListState() { return this._todoRepository.todoListState; }
 
   public getTodoList() {
-    this._todoStore.getTodoList();
+    this._todoRepository.getTodoList();
   }
 
   public addTodo(todo: Todo): void {
-    this._todoStore.addTodo(todo);
+    this._todoRepository.addTodo(todo);
   }
 
   public changeStatus(id: number): void {
-    this._todoStore.changeStatus(id);
+    this._todoRepository.changeStatus(id);
   }
 }

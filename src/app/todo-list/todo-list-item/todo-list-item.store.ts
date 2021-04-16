@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { TodoStore } from '../../core/todo/todo.store';
+import { TodoRepository } from '../../core/todo/todo.repository';
 
 @Injectable()
 export class TodoListItemStore {
-  constructor(private _todoStore: TodoStore) {}
+  constructor(private _todoRepository: TodoRepository) {}
 
   public changeStatus(id: number): void {
-    this._todoStore.changeStatus(id);
+    this._todoRepository.changeStatus(id);
   }
 }

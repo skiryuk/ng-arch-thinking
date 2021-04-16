@@ -5,11 +5,11 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 
 import { Todo } from './todo.models';
-import { ITodoRepository } from './todo.repository';
+import { ITodoService } from './todo.service';
 
-// Репозиторий на методах апи
+// Сервис на методах апи
 @Injectable()
-export class ApiTodoRepository implements ITodoRepository {
+export class ApiTodoService implements ITodoService {
 
   constructor(
     private _http: HttpClient
