@@ -61,12 +61,14 @@ export class AppDataState<T> {
 
   public endLoadingSuccess(data: T): void {
     this.data = data;
+    this.success = true;
     this.loading = false;
     this.error = null;
   }
 
   public endLoadingError(error: string): void {
     this.data = null;
+    this.success = false;
     this.loading = false;
     this.error = error;
   }
